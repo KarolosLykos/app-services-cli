@@ -59,10 +59,10 @@ $ rhoas kafka acl grant-access --consumer --user user_name --topic-prefix "abc" 
 $ rhoas kafka acl grant-access --producer --user user_name --topic-prefix "abc"
 
 # Grant access to all users for consuming messages from topic "my-topic"
-$ rhoas kafka acl grant-access --consumer --user all --topic my-topic --group my-group
+$ rhoas kafka acl grant-access --consumer --all-principals --topic my-topic --group my-group
 
 # Grant access to all users for producing messages to topic "my-topic"
-$ rhoas kafka acl grant-access --producer --user all --topic my-topic
+$ rhoas kafka acl grant-access --producer --all-principals --topic my-topic
 
 # Grant access to principal for produce and consume messages from all topics 
 $ rhoas kafka acl grant-access --producer --consumer --user user_name --topic all --group all
@@ -70,6 +70,9 @@ $ rhoas kafka acl grant-access --producer --consumer --user user_name --topic al
 
 [kafka.acl.grantPermissions.error.bothPrincipalsSelected]
 one = 'flags "--user" and "--service-account" can not be provided simultaneously'
+
+[kafka.acl.grantPermissions.allPrinciapls.error.notAllowed]
+one = 'flags "--user" and "--service-account" can not be provided along with "--all-principals"'
 
 [kafka.acl.grantPermissions.error.noPrincipalsSelected]
 one = 'principal is missing, provide "--user" or "--service-account" flag'
@@ -95,6 +98,9 @@ one = 'Prefix name for topics to be selected'
 
 [kafka.acl.common.flag.groupPrefix.description]
 one = 'Prefix name for groups to be selected'
+
+[kafka.acl.common.flag.allPrincipals]
+one = 'Select all users and service accounts as principal'
 
 [kafka.acl.common.flag.instance.id]
 one = 'ID of the Kafka instance to be used. By default, uses the currently selected instance'
