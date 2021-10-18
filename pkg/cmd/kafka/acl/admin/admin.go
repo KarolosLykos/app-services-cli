@@ -106,7 +106,7 @@ func runAdmin(opts *options) (err error) {
 	}
 
 	if serviceAccount != "" {
-		opts.principal = userID
+		opts.principal = serviceAccount
 	}
 
 	if allAccounts {
