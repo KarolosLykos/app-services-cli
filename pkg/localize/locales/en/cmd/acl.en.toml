@@ -17,6 +17,9 @@ $ rhoas kafka acl grant-access --producer --user user_name --topic all
 
 # List ACL rules for a Kafka instance
 $ rhoas kafka acl list
+
+# Give admin rights to user "abc"
+$ rhoas kafka acl admin --user abc
 '''
 
 [kafka.acl.common.error.unauthorized]
@@ -96,6 +99,9 @@ one = 'Prefix name for topics to be selected'
 [kafka.acl.common.flag.groupPrefix.description]
 one = 'Prefix name for groups to be selected'
 
+[kafka.acl.common.flag.allAccounts.description]
+one = 'Select all users and service accounts as principal'
+
 [kafka.acl.common.flag.instance.id]
 one = 'ID of the Kafka instance to be used. By default, uses the currently selected instance'
 
@@ -170,3 +176,21 @@ one = '"--topic" flag is required for consumer and producer operations'
 
 [kafka.acl.grantPermissions.prefix.error.notAllowed]
 one = 'can not use "--{{.Resource}}-prefix" and "--{{.Resource}}" flag together'
+
+[kafka.acl.admin.cmd.shortDescription]
+one = 'Give admin rights to the account'
+
+[kafka.acl.admin.cmd.longDescription]
+one = 'This command will give specified account permission to create and delete ACLs in a Kafka instance.'
+
+[kafka.acl.admin.cmd.example]
+one = '''
+# Give admin rights to user "abc"
+$ rhoas kafka acl admin --user abc     
+
+# Give admin rights to a service account
+$ rhoas kafka acl admin --service-account srvc-acct-0837725a-4e69-44e1-af3b-29da30aa85ce
+
+# Give admin rights to all accounts for a specific kafka instance
+$ rhoas kafka acl admin --all-accounts --instance-id c5hv7iru4an1g84pogp0
+'''

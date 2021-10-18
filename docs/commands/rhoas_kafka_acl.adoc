@@ -25,6 +25,9 @@ $ rhoas kafka acl grant-access --producer --user user_name --topic all
 # List ACL rules for a Kafka instance
 $ rhoas kafka acl list
 
+# Give admin rights to user "abc"
+$ rhoas kafka acl admin --user abc
+
 ....
 
 [discrete]
@@ -42,6 +45,13 @@ ifdef::env-github,env-browser[]
 endif::[]
 ifdef::pantheonenv[]
 * link:{path}#ref-rhoas-kafka_{context}[rhoas kafka]	 - Create, view, use, and manage your Kafka instances
+endif::[]
+
+ifdef::env-github,env-browser[]
+* link:rhoas_kafka_acl_admin.adoc#rhoas-kafka-acl-admin[rhoas kafka acl admin]	 - Give admin rights to the account
+endif::[]
+ifdef::pantheonenv[]
+* link:{path}#ref-rhoas-kafka-acl-admin_{context}[rhoas kafka acl admin]	 - Give admin rights to the account
 endif::[]
 
 ifdef::env-github,env-browser[]
