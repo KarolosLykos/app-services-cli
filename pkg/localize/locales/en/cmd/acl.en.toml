@@ -194,3 +194,6 @@ $ rhoas kafka acl admin --service-account srvc-acct-0837725a-4e69-44e1-af3b-29da
 # Give admin rights to all accounts for a specific kafka instance
 $ rhoas kafka acl admin --all-accounts --instance-id c5hv7iru4an1g84pogp0
 '''
+
+[kafka.acl.admin.log.info.successful]
+one = 'Account "{{.Account}}" is now allowed to create and delete ACLs for Kafka instance "{{.InstanceName}}"'
