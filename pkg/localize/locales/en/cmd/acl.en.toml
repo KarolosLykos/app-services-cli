@@ -80,6 +80,8 @@ one = 'principal is missing, provide "--user" or "--service-account" flag'
 [kafka.acl.common.error.noOperationSpecified]
 one = 'no operation specified: must provide atleast one of "--producer" or "--consumer" flag'
 
+[kafka.acl.common.error.allNotAllowed]
+one = '"all" alias not allowed for the "--{{.Flag}}" flag'
 
 [kafka.acl.common.flag.user.description]
 one = 'Username to be used as principal'

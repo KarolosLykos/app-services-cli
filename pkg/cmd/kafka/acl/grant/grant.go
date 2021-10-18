@@ -145,8 +145,10 @@ func runGrantPermissions(opts *options) (err error) {
 	}
 
 	if opts.user != "" {
-		user := getArgumentFromAlias(opts.user)
-		userArg = buildPrincipal(user)
+		if opts.user == acl.All {
+			return opts.localizer.MustLocalizeError("kafka.acl.common.error.allNotAllowed", localize.NewEntry("Flag", "user"))
+		}
+		userArg = buildPrincipal(opts.user)
 	}
 
 	if opts.allPrincipals {
@@ -154,8 +156,10 @@ func runGrantPermissions(opts *options) (err error) {
 	}
 
 	if opts.svcAccount != "" {
-		serviceAccount := getArgumentFromAlias(opts.svcAccount)
-		userArg = buildPrincipal(serviceAccount)
+		if opts.svcAccount == acl.All {
+			return opts.localizer.MustLocalizeError("kafka.acl.common.error.allNotAllowed", localize.NewEntry("Flag", "service-account"))
+		}
+		userArg = buildPrincipal(opts.svcAccount)
 	}
 
 	var aclBindRequests []kafkainstanceclient.ApiCreateAclRequest
