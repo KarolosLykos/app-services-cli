@@ -33,17 +33,17 @@ type options struct {
 	localizer  localize.Localizer
 	Context    context.Context
 
-	kafkaID       string
-	topic         string
-	user          string
-	svcAccount    string
-	group         string
-	producer      bool
-	consumer      bool
-	topicPrefix   string
-	groupPrefix   string
-	force         bool
-	allPrincipals bool
+	kafkaID     string
+	topic       string
+	user        string
+	svcAccount  string
+	group       string
+	producer    bool
+	consumer    bool
+	topicPrefix string
+	groupPrefix string
+	force       bool
+	allAccounts bool
 }
 
 // NewGrantPermissionsACLCommand creates a series of ACL rules
@@ -97,9 +97,9 @@ func NewGrantPermissionsACLCommand(f *factory.Factory) *cobra.Command {
 	cmd.Flags().BoolVar(&opts.producer, "producer", false, opts.localizer.MustLocalize("kafka.acl.grantPermissions.flag.producer.description"))
 	cmd.Flags().StringVar(&opts.topicPrefix, "topic-prefix", "", opts.localizer.MustLocalize("kafka.acl.common.flag.topicPrefix.description"))
 	cmd.Flags().StringVar(&opts.groupPrefix, "group-prefix", "", opts.localizer.MustLocalize("kafka.acl.common.flag.groupPrefix.description"))
-	cmd.Flags().StringVar(&opts.kafkaID, "instance-id", "", opts.localizer.MustLocalize("kafka.acl.common.flag.instance.id"))
-	cmd.Flags().BoolVar(&opts.allPrincipals, "all-principals", false, opts.localizer.MustLocalize("kafka.acl.common.flag.allPrincipals"))
-	cmd.Flags().BoolVarP(&opts.force, "yes", "y", false, opts.localizer.MustLocalize("kafka.acl.grantPermissions.flag.yes"))
+	cmd.Flags().StringVar(&opts.kafkaID, "instance-id", "", opts.localizer.MustLocalize("kafka.acl.common.flag.instance.id.description"))
+	cmd.Flags().BoolVar(&opts.allAccounts, "all-accounts", false, opts.localizer.MustLocalize("kafka.acl.common.flag.allAccounts.description"))
+	cmd.Flags().BoolVarP(&opts.force, "yes", "y", false, opts.localizer.MustLocalize("kafka.acl.grantPermissions.flag.yes.description"))
 
 	return cmd
 }
@@ -151,7 +151,7 @@ func runGrantPermissions(opts *options) (err error) {
 		userArg = buildPrincipal(opts.user)
 	}
 
-	if opts.allPrincipals {
+	if opts.allAccounts {
 		userArg = buildPrincipal(acl.Wildcard)
 	}
 
@@ -316,7 +316,7 @@ func validateFlagInputCombination(opts *options) error {
 	}
 
 	// check if priincipal is provided
-	if opts.user == "" && opts.svcAccount == "" && !opts.allPrincipals {
+	if opts.user == "" && opts.svcAccount == "" && !opts.allAccounts {
 		return opts.localizer.MustLocalizeError("kafka.acl.grantPermissions.error.noPrincipalsSelected")
 	}
 
@@ -325,8 +325,8 @@ func validateFlagInputCombination(opts *options) error {
 		return opts.localizer.MustLocalizeError("kafka.acl.grantPermissions.error.bothPrincipalsSelected")
 	}
 
-	// user and service account can't be along with "--all-principals" flag
-	if opts.allPrincipals && (opts.svcAccount != "" || opts.user != "") {
+	// user and service account can't be along with "--all-accounts" flag
+	if opts.allAccounts && (opts.svcAccount != "" || opts.user != "") {
 		return opts.localizer.MustLocalizeError("kafka.acl.grantPermissions.allPrinciapls.error.notAllowed")
 	}
 
